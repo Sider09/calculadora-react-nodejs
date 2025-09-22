@@ -7,7 +7,7 @@ app.use(cors());
 app.use(express.json());
 
 app.get('/api/data', (req, res) => {
-  res.json({ message: '¡Hola desde la API de Node.js!' });
+  res.json({ message: '¡Hola desde la API de Node.js! OPA' });
 });
 
 app.listen(PORT, () => {
