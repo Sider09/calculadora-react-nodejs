@@ -5,9 +5,17 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 5000;
 
+// Array para almacenar el historial de operaciones
+const historial = [];
+
 // Middleware para habilitar CORS y procesar JSON
 app.use(cors());
 app.use(express.json());
+
+// Nueva ruta GET para obtener todo el historial
+app.get('/api/historial', (req, res) => {
+  res.json(historial);
+});
 
 // Ruta principal para la API de la calculadora
 app.post('/api/calcular', (req, res) => {
@@ -42,6 +50,9 @@ app.post('/api/calcular', (req, res) => {
     default:
       return res.status(400).json({ error: 'Operación no válida. Use: sumar, restar, multiplicar o dividir.' });
   }
+  
+  // Guarda la operación completa en el historial
+  historial.push({ num1, operacion, num2, resultado, timestamp: new Date().toLocaleString() });
 
   // Envía la respuesta con el resultado
   res.json({ resultado });
