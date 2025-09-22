@@ -26,7 +26,7 @@ function App() {
         console.error("Error al obtener el historial del servidor.");
       }
     } catch (error) {
-      console.error("Error de conexión al obtener el historial:", error);
+      console.error("Error de conexión al obtener el opa historial:", error);
     }
   };
 
