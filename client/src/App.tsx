@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import './App.css'; // Importamos nuestros estilos CSS
+import './App.css';
 
-// Define la interfaz para la estructura del historial
 interface HistoryItem {
   num1: number;
   operacion: string;
@@ -17,7 +16,6 @@ function App() {
   const [secondNumber, setSecondNumber] = useState('');
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
-  // Función para obtener el historial del backend
   const fetchHistory = async () => {
     try {
       const response = await fetch('http://localhost:5000/api/historial');
@@ -32,16 +30,13 @@ function App() {
     }
   };
 
-  // Se ejecuta una vez al inicio para cargar el historial
   useEffect(() => {
     fetchHistory();
   }, []);
 
   const handleButtonClick = (value: string) => {
-    // Maneja los botones de números y punto decimal
     if (/[0-9.]/.test(value)) {
       if (operator === '') {
-        // Ingresando el primer número
         if (displayValue === '0' && value !== '.') {
           setDisplayValue(value);
         } else {
@@ -49,33 +44,27 @@ function App() {
         }
         setFirstNumber(firstNumber + value);
       } else {
-        // Ingresando el segundo número
         setDisplayValue(displayValue + value);
         setSecondNumber(secondNumber + value);
       }
     } else if (value === 'C') {
-      // Botón "Clear"
       setDisplayValue('0');
       setFirstNumber('');
       setOperator('');
       setSecondNumber('');
     } else if (['+', '-', '*', '/'].includes(value)) {
-      // Es un operador
       setOperator(value);
       setDisplayValue(displayValue + ' ' + value + ' ');
     } else if (value === '=') {
-      // Botón "Igual"
       calculateResult();
     }
   };
 
   const calculateResult = async () => {
-    // Si no tenemos todos los componentes, no hacemos nada
     if (!firstNumber || !secondNumber || !operator) {
       return;
     }
 
-    // Mapea los símbolos a los nombres que el backend espera
     const operationMap: { [key: string]: string } = {
       '+': 'sumar',
       '-': 'restar',
@@ -83,7 +72,6 @@ function App() {
       '/': 'dividir',
     };
     
-    // Envía los datos al servidor para calcular el resultado
     try {
       const response = await fetch('http://localhost:5000/api/calcular', {
         method: 'POST',
@@ -100,17 +88,12 @@ function App() {
       const data = await response.json();
 
       if (response.ok) {
-        // Si la respuesta es exitosa, muestra el resultado
         setDisplayValue(data.resultado.toString());
-        // Reinicia el estado para la próxima operación
         setFirstNumber(data.resultado.toString());
         setOperator('');
         setSecondNumber('');
-        
-        // Actualiza el historial después de una operación exitosa
-        fetchHistory(); // ¡Esta es la línea clave!
+        fetchHistory();
       } else {
-        // Maneja los errores del servidor
         alert(data.error);
         setDisplayValue('Error');
         setFirstNumber('');
@@ -118,8 +101,7 @@ function App() {
         setSecondNumber('');
       }
     } catch (error) {
-      // Maneja errores de conexión
-      console.error("Error de conexión:", error); // Imprimimos el error en la consola
+      console.error("Error de conexión:", error);
       alert('Error de conexión con el servidor. Por favor, asegúrate de que el servidor de Node.js está corriendo y escuchando en el puerto 5000.');
       setDisplayValue('Error');
       setFirstNumber('');
@@ -129,52 +111,85 @@ function App() {
   };
 
   return (
-    <div className="app-container">
-      <div className="calculator">
-        <div className="display">{displayValue}</div>
-        <div className="buttons">
-          {/* Fila 1 */}
-          <button className="clear" onClick={() => handleButtonClick('C')}>C</button>
-          <button className="operator" onClick={() => handleButtonClick('+/-')}>+/-</button>
-          <button className="operator" onClick={() => handleButtonClick('%')}>%</button>
-          <button className="operator" onClick={() => handleButtonClick('/')}>/</button>
+    <div className="landing-page-container">
+      <header className="main-header">
+        <h1 className="logo">C.O.M.P.U.T.E.</h1>
+        <nav className="nav-menu">
+          <a href="#calculator-section">Calculadora</a>
+          <a href="#history-section">Historial</a>
+          <a href="#contact-section">Contacto</a>
+        </nav>
+      </header>
 
-          {/* Fila 2 */}
-          <button onClick={() => handleButtonClick('7')}>7</button>
-          <button onClick={() => handleButtonClick('8')}>8</button>
-          <button onClick={() => handleButtonClick('9')}>9</button>
-          <button className="operator" onClick={() => handleButtonClick('*')}>*</button>
+      <main>
+        <section className="hero-section">
+          <div className="hero-content">
+            <h1 className="hero-title">Calculadora Cuántica</h1>
+            <p className="hero-subtitle">La herramienta definitiva para la precisión del futuro. Cálculos instantáneos, resultados perfectos.</p>
+          </div>
+        </section>
 
-          {/* Fila 3 */}
-          <button onClick={() => handleButtonClick('4')}>4</button>
-          <button onClick={() => handleButtonClick('5')}>5</button>
-          <button onClick={() => handleButtonClick('6')}>6</button>
-          <button className="operator" onClick={() => handleButtonClick('-')}>-</button>
+        <section id="calculator-section" className="section-container">
+          <h2 className="section-title">Terminal de Cómputo</h2>
+          <p className="section-subtitle">Realiza tus operaciones con la tecnología más avanzada.</p>
+          <div className="app-container">
+            <div className="calculator">
+              <div className="display">{displayValue}</div>
+              <div className="buttons">
+                <button className="clear" onClick={() => handleButtonClick('C')}>C</button>
+                <button className="operator" onClick={() => handleButtonClick('+/-')}>+/-</button>
+                <button className="operator" onClick={() => handleButtonClick('%')}>%</button>
+                <button className="operator" onClick={() => handleButtonClick('/')}>/</button>
+                <button onClick={() => handleButtonClick('7')}>7</button>
+                <button onClick={() => handleButtonClick('8')}>8</button>
+                <button onClick={() => handleButtonClick('9')}>9</button>
+                <button className="operator" onClick={() => handleButtonClick('*')}>*</button>
+                <button onClick={() => handleButtonClick('4')}>4</button>
+                <button onClick={() => handleButtonClick('5')}>5</button>
+                <button onClick={() => handleButtonClick('6')}>6</button>
+                <button className="operator" onClick={() => handleButtonClick('-')}>-</button>
+                <button onClick={() => handleButtonClick('1')}>1</button>
+                <button onClick={() => handleButtonClick('2')}>2</button>
+                <button onClick={() => handleButtonClick('3')}>3</button>
+                <button className="operator" onClick={() => handleButtonClick('+')}>+</button>
+                <button className="zero" onClick={() => handleButtonClick('0')}>0</button>
+                <button onClick={() => handleButtonClick('.')}>.</button>
+                <button className="equals" onClick={() => handleButtonClick('=')}>=</button>
+              </div>
+            </div>
+          </div>
+        </section>
 
-          {/* Fila 4 */}
-          <button onClick={() => handleButtonClick('1')}>1</button>
-          <button onClick={() => handleButtonClick('2')}>2</button>
-          <button onClick={() => handleButtonClick('3')}>3</button>
-          <button className="operator" onClick={() => handleButtonClick('+')}>+</button>
+        <section id="history-section" className="section-container">
+          <h2 className="section-title">Memoria de Operaciones</h2>
+          <p className="section-subtitle">Consulta tus cálculos más recientes.</p>
+          <div className="app-container">
+            <div className="history">
+              <h2>Historial</h2>
+              <ul>
+                {history.length > 0 ? (
+                  history.map((op, index) => (
+                    <li key={index}>
+                      <span>{op.num1} {op.operacion} {op.num2} = {op.resultado}</span>
+                      <span className="timestamp">{op.timestamp}</span>
+                    </li>
+                  ))
+                ) : (
+                  <p className="empty-history-message">El historial está vacío. ¡Empieza a calcular!</p>
+                )}
+              </ul>
+            </div>
+          </div>
+        </section>
+      </main>
 
-          {/* Fila 5 */}
-          <button className="zero" onClick={() => handleButtonClick('0')}>0</button>
-          <button onClick={() => handleButtonClick('.')}>.</button>
-          <button className="equals" onClick={() => handleButtonClick('=')}>=</button>
+      <footer className="main-footer">
+        <p>&copy; 2025 C.O.M.P.U.T.E. | Todos los derechos reservados.</p>
+        <div className="footer-links">
+          <a href="#">Privacidad</a>
+          <a href="#">Términos</a>
         </div>
-      </div>
-      
-      <div className="history">
-        <h2>Historial de Operaciones</h2>
-        <ul>
-          {history.map((op, index) => (
-            <li key={index}>
-              {op.num1} {op.operacion} {op.num2} = {op.resultado}
-              <span className="timestamp">{op.timestamp}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
+      </footer>
     </div>
   );
 }

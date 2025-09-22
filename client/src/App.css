@@ -1,20 +1,163 @@
 /* client/src/App.css */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@400;700&display=swap');
+
+/* Colores y Variables */
+:root {
+  --background-dark: #0A0A1A;
+  --panel-background: #1C1C36;
+  --text-primary: #E0E0FF;
+  --text-secondary: #9FA8DA;
+  --accent-color: #6A7EEA;
+  --accent-light: #8A9AFF;
+  --glow-color: #7B8DFE;
+  --button-hover: #34346E;
+  --button-active: #48488E;
+}
+
 body {
   margin: 0;
+  /* Cambios para centrar el contenido */
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  background-color: #282c34; /* Un fondo oscuro para que resalte la calculadora */
-  font-family: 'Arial', sans-serif;
+  background-color: var(--background-dark);
+  color: var(--text-primary);
+  font-family: 'Roboto Mono', monospace;
+  line-height: 1.6;
+}
+
+/* -------------------- Landing Page Structure -------------------- */
+.landing-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  min-height: 100vh;
+}
+
+.main-header {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 1.5em;
+  color: var(--accent-light);
+  text-shadow: 0 0 8px var(--glow-color);
+  letter-spacing: 2px;
+}
+
+.nav-menu a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin-left: 20px;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.nav-menu a:hover {
+  color: var(--accent-color);
+  text-shadow: 0 0 5px var(--glow-color);
+}
+
+main {
+  width: 100%;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 80px;
+}
+
+.hero-section {
+  text-align: center;
+  padding: 80px 20px;
+  width: 100%;
+  background: radial-gradient(circle, rgba(106, 126, 234, 0.1) 0%, rgba(10, 10, 26, 0) 70%);
+}
+
+.hero-content {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 3em;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  text-shadow: 0 0 15px var(--glow-color);
+}
+
+.hero-subtitle {
+  font-size: 1.2em;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.section-container {
+  text-align: center;
+  padding: 40px 20px;
+  border-radius: 15px;
+  background-color: var(--panel-background);
+  box-shadow: 0 0 30px rgba(106, 126, 234, 0.1);
+  width: 100%;
+}
+
+.section-title {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent-light);
+  margin-bottom: 10px;
+}
+
+.section-subtitle {
+  color: var(--text-secondary);
+  font-size: 1em;
+  margin-bottom: 40px;
+}
+
+.main-footer {
+  width: 100%;
+  max-width: 1200px;
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid var(--panel-background);
+  color: var(--text-secondary);
+}
+
+.footer-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  margin: 0 10px;
+}
+
+/* -------------------- Calculator and History Styles -------------------- */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
 }
 
 .calculator {
-  background-color: #3a3f47;
+  background-color: #282c34;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   padding: 20px;
-  width: 300px; /* Ancho fijo para la calculadora */
+  width: 300px;
 }
 
 .display {
@@ -25,17 +168,17 @@ body {
   border-radius: 5px;
   text-align: right;
   margin-bottom: 15px;
-  min-height: 50px; /* Para que siempre tenga una altura mínima */
+  min-height: 50px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  word-break: break-all; /* Para que el texto largo no se desborde */
+  word-break: break-all;
 }
 
 .buttons {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 columnas de botones */
-  gap: 10px; /* Espacio entre botones */
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
 }
 
 button {
@@ -46,7 +189,7 @@ button {
   padding: 20px;
   font-size: 1.5em;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, transform 0.1s ease;
 }
 
 button:hover {
@@ -55,6 +198,7 @@ button:hover {
 
 button:active {
   background-color: #4a5059;
+  transform: scale(0.95);
 }
 
 .operator {
@@ -70,7 +214,7 @@ button:active {
 }
 
 .equals {
-  grid-column: span 2; /* El botón de igual ocupará 2 columnas */
+  grid-column: span 2;
   background-color: #4CAF50;
 }
 
@@ -95,18 +239,11 @@ button:active {
 }
 
 .zero {
-  grid-column: span 2; /* El botón cero ocupará 2 columnas */
-}
-
-.app-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
+  grid-column: span 2;
 }
 
 .history {
-  background-color: #3a3f47;
+  background-color: #282c34;
   color: white;
   border-radius: 10px;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
@@ -115,6 +252,7 @@ button:active {
 }
 
 .history h2 {
+  font-family: 'Orbitron', sans-serif;
   margin-top: 0;
   border-bottom: 1px solid #555c66;
   padding-bottom: 10px;
@@ -124,8 +262,8 @@ button:active {
 .history ul {
   list-style-type: none;
   padding: 0;
-  max-height: 200px; /* Para que la lista no crezca indefinidamente */
-  overflow-y: auto; /* Permite desplazamiento si hay muchos elementos */
+  max-height: 200px;
+  overflow-y: auto;
 }
 
 .history li {
@@ -134,6 +272,8 @@ button:active {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  word-break: break-all;
+  white-space: pre-wrap;
 }
 
 .history li:last-child {
@@ -143,4 +283,72 @@ button:active {
 .timestamp {
   font-size: 0.8em;
   color: #a0a0a0;
+  margin-left: 10px;
+  flex-shrink: 0;
+}
+
+.empty-history-message {
+  text-align: center;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+/* Media Queries para Responsividad */
+
+/* Pantallas más pequeñas que 768px (móviles y tablets) */
+@media (max-width: 768px) {
+  /* Estilos para el encabezado */
+  .main-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  
+  .nav-menu a {
+    margin: 0 10px;
+  }
+
+  /* Títulos de sección más pequeños */
+  .hero-title {
+    font-size: 2em;
+    letter-spacing: 2px;
+  }
+
+  .hero-subtitle {
+    font-size: 0.9em;
+  }
+
+  .section-title {
+    font-size: 1.5em;
+    letter-spacing: 1px;
+  }
+
+  /* Contenedores con ancho adaptable */
+  .landing-page-container,
+  .main-header,
+  main {
+    padding: 10px;
+  }
+
+  /* Calculadora e historial se adaptan al ancho completo */
+  .calculator,
+  .history {
+    width: 100%;
+    max-width: 320px;
+  }
+  
+  .buttons {
+    gap: 8px;
+  }
+
+  /* Botones más grandes en pantalla completa pero se adaptan */
+  button {
+    padding: 15px;
+    font-size: 1.2em;
+  }
+
+  /* El historial se reduce y tiene un scroll más corto */
+  .history ul {
+    max-height: 150px;
+  }
 }
